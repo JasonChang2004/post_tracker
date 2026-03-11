@@ -6,7 +6,8 @@
     "url": "https://www.threads.com/@make_investment_easy",
     "enabled": true,
     "check_interval_minutes": 60,
-    "parser_type": "threads_public_profile"
+    "parser_type": "threads_public_profile",
+    "thread_id": null
   },
   {
     "id": "stock_glee",
@@ -15,7 +16,8 @@
     "url": "https://www.threads.com/@stock_glee",
     "enabled": true,
     "check_interval_minutes": 60,
-    "parser_type": "threads_public_profile"
+    "parser_type": "threads_public_profile",
+    "thread_id": null
   },
   {
     "id": "aoyamaa._",
@@ -24,6 +26,7 @@
     "url": "https://www.threads.com/@aoyamaa._",
     "enabled": true,
     "check_interval_minutes": 60,
-    "parser_type": "threads_public_profile"
+    "parser_type": "threads_public_profile",
+    "thread_id": null
   }
 ]

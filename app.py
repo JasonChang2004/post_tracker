@@ -56,6 +56,7 @@ class Source:
     enabled: bool = True
     check_interval_minutes: int = 60
     parser_type: str = "threads_public_profile"
+    thread_id: Optional[str] = None
 
 
 @dataclass
@@ -409,10 +410,16 @@ class DiscordNotifier:
         self.session = requests.Session()
         self.session.headers.update({"Content-Type": "application/json"})
 
-    def send_post(self, post: Post) -> None:
+    def send_post(self, post: Post, thread_id: Optional[str] = None) -> None:
         payload = {"embeds": [self._format_embed(post)]}
+        
+        # 如果指定了 thread_id，則發送到該 thread
+        url = self.webhook_url
+        if thread_id:
+            url = f"{self.webhook_url}?thread_id={thread_id}"
+        
         response = self.session.post(
-            self.webhook_url,
+            url,
             json=payload,
             timeout=REQUEST_TIMEOUT,
         )
@@ -484,10 +491,11 @@ class BotRunner:
                     continue
 
                 for post in reversed(new_posts):
-                    self.notifier.send_post(post)
+                    self.notifier.send_post(post, thread_id=source.thread_id)
                     self.state_store.add_notified_post(source.id, post.dedupe_key)
                     notified_count += 1
-                    logger.info("Notified post | source=%s | post=%s", source.id, post.dedupe_key)
+                    logger.info("Notified post | source=%s | post=%s | thread=%s", 
+                               source.id, post.dedupe_key, source.thread_id or "main")
 
                 self.state_store.mark_success(source.id, datetime.now(tz=UTC))
 
