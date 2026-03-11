@@ -2,7 +2,7 @@
   {
     "id": "make_investment_easy",
     "platform": "threads",
-    "name": "投資理財分享",
+    "name": "make_investment_easy",
     "url": "https://www.threads.com/@make_investment_easy",
     "enabled": true,
     "check_interval_minutes": 60,
@@ -11,8 +11,17 @@
   {
     "id": "stock_glee",
     "platform": "threads",
-    "name": "test2",
+    "name": "stock_glee",
     "url": "https://www.threads.com/@stock_glee",
+    "enabled": true,
+    "check_interval_minutes": 60,
+    "parser_type": "threads_public_profile"
+  },
+  {
+    "id": "aoyamaa._",
+    "platform": "instagram",
+    "name": "aoyamaa._",
+    "url": "https://www.threads.com/@aoyamaa._",
     "enabled": true,
     "check_interval_minutes": 60,
     "parser_type": "threads_public_profile"

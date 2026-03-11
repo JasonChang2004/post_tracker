@@ -12,5 +12,12 @@
     "last_error_at": null,
     "last_error_message": null,
     "notified_posts": []
+  },
+  "aoyamaa._": {
+    "last_checked_at": null,
+    "last_success_at": null,
+    "last_error_at": null,
+    "last_error_message": null,
+    "notified_posts": []
   }
 }

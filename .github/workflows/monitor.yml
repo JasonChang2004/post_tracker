@@ -3,7 +3,7 @@ name: Threads Monitor Bot
 on:
   # 每小時執行一次
   schedule:
-    - cron: '0 * * * *'  # 每小時的第 0 分鐘
+    - cron: '17 * * * *'  # 每小時的第 17 分鐘
   
   # 也可以手動觸發
   workflow_dispatch:
