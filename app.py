@@ -122,7 +122,8 @@ class JsonStore:
         if not self.path.exists():
             return default
         try:
-            with self.path.open("r", encoding="utf-8") as f:
+            # 使用 utf-8-sig 自動處理 BOM（Byte Order Mark）
+            with self.path.open("r", encoding="utf-8-sig") as f:
                 return json.load(f)
         except json.JSONDecodeError as exc:
             raise BotError(f"Invalid JSON file: {self.path} ({exc})") from exc
