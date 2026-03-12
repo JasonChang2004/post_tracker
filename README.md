@@ -2,13 +2,18 @@
 
 自動監控 Threads 帳號的新貼文，並透過 Discord Webhook 發送通知。
 
-## 功能特色
+## ✨ 功能特色
 
-- 🔄 定期監控指定的 Threads 帳號
-- 📢 新貼文自動推送至 Discord 頻道
-- 💾 智能去重，避免重複通知
-- ⏱️ 可自訂檢查間隔時間
-- 🤖 支援 GitHub Actions 自動化執行
+- 🔄 **自動監控**：定期檢查指定的 Threads 帳號新貼文
+- 📢 **Discord 通知**：精美 Embed 格式推送至頻道或 Thread
+- 💾 **智能去重**：避免重複通知相同貼文
+- 🖼️ **圖片支援**：自動提取並顯示貼文圖片
+- ⏱️ **靈活排程**：可自訂檢查間隔時間
+- 🤖 **GitHub Actions**：雲端自動執行，無需本地運行
+- 🔁 **自動重試**：網路失敗自動重試，提高穩定性
+- ⚠️ **錯誤警報**：批次失敗時自動發送錯誤通知
+- 🏥 **健康檢查**：24 小時無新貼文時發送運作確認
+- 🌏 **台北時間**：所有時間自動轉換為台北時區顯示
 
 ## 環境需求
 
@@ -101,6 +106,64 @@ schedule:
 - `enabled`: `true` 啟用 / `false` 停用
 - `check_interval_minutes`: 檢查間隔（分鐘）
 - `parser_type`: 固定填 `"threads_public_profile"`
+- `thread_id`: （選填）Discord Thread ID，將通知發送到特定討論串
+
+## 🔧 進階功能
+
+### Discord Thread 路由
+
+可將不同來源的通知發送到同一頻道的不同討論串：
+
+1. 開啟 Discord **開發者模式**（設定 → 進階）
+2. 右鍵點擊 Thread → **複製討論串 ID**
+3. 在 `sources.json` 設定 `thread_id`
+
+詳見 [HOW_TO_USE_THREADS.md](HOW_TO_USE_THREADS.md)
+
+### 錯誤警報
+
+當超過 50% 來源抓取失敗時，自動發送 🔴 紅色警報到 Discord。
+
+### 健康檢查
+
+連續 24 小時無新貼文時，發送 🟢 綠色健康檢查通知。
+
+### 自動重試
+
+- Threads 抓取：2 次重試，3 秒間隔
+- Discord 通知：3 次重試，2 秒間隔
+- 支援指數退避策略
+
+## 📚 文件
+
+- [版本更新說明](CHANGELOG_v1.0.md) - v1.0 優化內容
+- [新增帳號教學](HOW_TO_ADD_ACCOUNTS.md)
+- [Thread 路由設定](HOW_TO_USE_THREADS.md)
+
+## 🐛 問題排查
+
+### 檢查方式
+1. GitHub Actions → 執行記錄
+2. Discord 錯誤警報通知
+3. `data/state.json` → `last_error_message`
+
+### 常見問題
+- **無通知**：確認 `sources.json` 的 `enabled: true`
+- **重複通知**：等待下次執行，state.json 會自動同步
+- **抓取失敗**：帳號可能為私人，或網路暫時異常（會自動重試）
+
+## 📝 版本
+
+**目前版本**：1.0  
+**更新日期**：2026年3月12日
+
+**v1.0 重點**：
+- Playwright 資源管理
+- 重試機制與錯誤通知
+- 日誌精簡 70%
+- 台北時間統一顯示
+
+詳見 [CHANGELOG_v1.0.md](CHANGELOG_v1.0.md)
 
 ## 專案結構
 

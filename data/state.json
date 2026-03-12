@@ -1,7 +1,7 @@
 {
   "make_investment_easy": {
-    "last_checked_at": "2026-03-11T22:43:15.109457Z",
-    "last_success_at": "2026-03-11T22:43:24.791143Z",
+    "last_checked_at": "2026-03-12T03:23:40.266927Z",
+    "last_success_at": "2026-03-12T03:23:54.167268Z",
     "last_error_at": null,
     "last_error_message": null,
     "notified_posts": [
@@ -13,11 +13,14 @@
     ]
   },
   "stock_glee": {
-    "last_checked_at": "2026-03-11T22:43:24.791156Z",
-    "last_success_at": "2026-03-11T22:43:32.479029Z",
+    "last_checked_at": "2026-03-12T03:23:54.167280Z",
+    "last_success_at": "2026-03-12T03:24:06.319917Z",
     "last_error_at": null,
     "last_error_message": null,
     "notified_posts": [
+      "DVxL-Adkkwk",
+      "DVw7lIVkh_6",
+      "DVw1p8sknSo",
       "DVvqxVZkv35",
       "DVu_wWiEnIz",
       "DVuXHOFkpu1",
@@ -26,8 +29,8 @@
     ]
   },
   "aoyamaa._": {
-    "last_checked_at": "2026-03-11T22:43:32.479042Z",
-    "last_success_at": "2026-03-11T22:43:40.649824Z",
+    "last_checked_at": "2026-03-12T03:24:06.319932Z",
+    "last_success_at": "2026-03-12T03:24:17.130390Z",
     "last_error_at": null,
     "last_error_message": null,
     "notified_posts": [
@@ -36,6 +39,33 @@
       "DVuwJEQkYzP",
       "DVuwM4wkY_V",
       "DVtSpZ8EdHw"
+    ]
+  },
+  "_health_check": {
+    "last_notification_at": "2026-03-12T03:24:41.926135Z",
+    "last_health_check_at": null
+  },
+  "growin_ai": {
+    "last_checked_at": "2026-03-12T03:24:17.130408Z",
+    "last_success_at": "2026-03-12T03:24:28.298968Z",
+    "last_error_at": null,
+    "last_error_message": null,
+    "notified_posts": [
+      "DMb008EpgOn",
+      "DVukdXgCT_N",
+      "DVukgi1Cf5p"
+    ]
+  },
+  "ai_j_2026.12": {
+    "last_checked_at": "2026-03-12T03:24:28.298981Z",
+    "last_success_at": "2026-03-12T03:24:41.926408Z",
+    "last_error_at": null,
+    "last_error_message": null,
+    "notified_posts": [
+      "DVY0vhCkQyV",
+      "DVY3tYZES1h",
+      "DVwDkT6kd8d",
+      "DVwEYgXEUZA"
     ]
   }
 }

@@ -3,10 +3,12 @@ import os
 import re
 import sys
 import logging
+import time
 from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
+from functools import wraps
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Callable, Dict, List, Optional, TypeVar
 from urllib.parse import urljoin
 from zoneinfo import ZoneInfo
 
@@ -42,9 +44,47 @@ logging.basicConfig(
 )
 logger = logging.getLogger("threads_discord_bot")
 
+# 重試配置
+RETRY_ATTEMPTS = 3
+RETRY_DELAY = 5  # 秒
+RETRY_BACKOFF = 1.5  # 指數退避倍數
+
 
 class BotError(Exception):
     pass
+
+
+T = TypeVar('T')
+
+
+def retry_on_failure(max_attempts: int = RETRY_ATTEMPTS, delay: float = RETRY_DELAY, 
+                     backoff: float = RETRY_BACKOFF, exceptions: tuple = (Exception,)):
+    """重試裝飾器，支援指數退避"""
+    def decorator(func: Callable[..., T]) -> Callable[..., T]:
+        @wraps(func)
+        def wrapper(*args, **kwargs) -> T:
+            last_exception = None
+            current_delay = delay
+            
+            for attempt in range(1, max_attempts + 1):
+                try:
+                    return func(*args, **kwargs)
+                except exceptions as exc:
+                    last_exception = exc
+                    if attempt == max_attempts:
+                        logger.error("Failed after %d attempts: %s", max_attempts, func.__name__)
+                        raise
+                    
+                    logger.warning(
+                        "Attempt %d/%d failed for %s: %s. Retrying in %.1fs...",
+                        attempt, max_attempts, func.__name__, str(exc)[:100], current_delay
+                    )
+                    time.sleep(current_delay)
+                    current_delay *= backoff
+            
+            raise last_exception
+        return wrapper
+    return decorator
 
 
 @dataclass
@@ -235,27 +275,32 @@ class ThreadsFetcher:
             )
         return posts[:limit]
 
+    @retry_on_failure(max_attempts=2, delay=3, exceptions=(PlaywrightTimeoutError, BotError))
     def _get_profile_html(self, url: str) -> str:
         """使用 Playwright 抓取 Threads 頁面（需要執行 JavaScript）"""
+        browser = None
         try:
             with sync_playwright() as p:
                 browser = p.chromium.launch(headless=True)
                 page = browser.new_page()
                 page.set_extra_http_headers(DEFAULT_HEADERS)
                 
-                logger.info("Fetching Threads profile: %s", url)
+                logger.info("Fetching: %s", url.split('@')[-1])
                 page.goto(url, wait_until="networkidle", timeout=30000)
-                page.wait_for_timeout(3000)  # 額外等待確保內容載入
+                page.wait_for_timeout(3000)
                 
                 html = page.content()
-                browser.close()
-                
-                logger.info("Successfully fetched HTML (length: %d)", len(html))
                 return html
         except PlaywrightTimeoutError as exc:
-            raise BotError(f"Timeout while loading Threads profile: {url}") from exc
+            raise BotError(f"Timeout: {url}") from exc
         except Exception as exc:
-            raise BotError(f"Failed to fetch Threads profile: {url} ({exc})") from exc
+            raise BotError(f"Fetch failed: {exc}") from exc
+        finally:
+            if browser:
+                try:
+                    browser.close()
+                except Exception:
+                    pass
 
     def _extract_posts_from_html(self, html: str, source: Source) -> List[Post]:
         post_urls = self._extract_post_urls(html)
@@ -263,22 +308,8 @@ class ThreadsFetcher:
         time_candidates = self._extract_time_candidates(html)
         image_candidates = self._extract_image_candidates(html)
 
-        logger.info("Extracted data | post_urls=%d | texts=%d | times=%d | images=%d", 
+        logger.info("Extracted | posts=%d texts=%d times=%d images=%d", 
                    len(post_urls), len(text_candidates), len(time_candidates), len(image_candidates))
-        
-        # 印出詳細資訊以便診斷
-        logger.info("=== Post URLs ===")
-        for i, url in enumerate(post_urls[:5]):
-            logger.info("  [%d] %s", i, url)
-        
-        logger.info("=== Text Candidates ===")
-        for i, text in enumerate(text_candidates[:5]):
-            preview = text[:100] if len(text) > 100 else text
-            logger.info("  [%d] %s", i, preview)
-        
-        logger.info("=== Time Candidates ===")
-        for i, time in enumerate(time_candidates[:5]):
-            logger.info("  [%d] %s", i, time)
 
         posts: List[Post] = []
         for idx, post_url in enumerate(post_urls):
@@ -382,7 +413,7 @@ class ThreadsFetcher:
                 if ts > 10**12:
                     ts = ts / 1000
                 dt = datetime.fromtimestamp(ts, tz=UTC)
-                # 轉換為台北時區
+                # 轉換為台北時區並格式化
                 dt_taipei = dt.astimezone(TAIPEI_TZ)
                 formatted = dt_taipei.strftime("%Y-%m-%d %H:%M:%S")
                 if formatted not in candidates:
@@ -391,7 +422,7 @@ class ThreadsFetcher:
                 continue
 
         for match in re.findall(r'datetime="([^"]+)"', html):
-            # 嘗試解析 ISO 格式並轉換為台北時區
+            # 解析 ISO 格式並轉換為台北時區
             try:
                 dt = datetime.fromisoformat(match.replace("Z", "+00:00"))
                 dt_taipei = dt.astimezone(TAIPEI_TZ)
@@ -446,6 +477,7 @@ class DiscordNotifier:
         self.session = requests.Session()
         self.session.headers.update({"Content-Type": "application/json"})
 
+    @retry_on_failure(max_attempts=3, delay=2, exceptions=(requests.RequestException,))
     def send_post(self, post: Post, thread_id: Optional[str] = None) -> None:
         payload = {"embeds": [self._format_embed(post)]}
         
@@ -461,6 +493,7 @@ class DiscordNotifier:
         )
         response.raise_for_status()
     
+    @retry_on_failure(max_attempts=2, delay=2, exceptions=(requests.RequestException,))
     def send_health_check(self, hours_since_last: float) -> None:
         """發送健康檢查通知"""
         payload = {"embeds": [self._format_health_check_embed(hours_since_last)]}
@@ -470,8 +503,31 @@ class DiscordNotifier:
             timeout=REQUEST_TIMEOUT,
         )
         response.raise_for_status()
+    
+    def send_error_alert(self, error_title: str, error_msg: str, failed_sources: int = 0) -> None:
+        """發送錯誤警報到 Discord"""
+        try:
+            embed = {
+                "title": f"⚠️ {error_title}",
+                "description": f"```\n{error_msg[:1500]}\n```",
+                "color": 15158332,  # 紅色
+                "fields": [
+                    {"name": "⏰ 時間", "value": datetime.now(tz=TAIPEI_TZ).strftime("%Y-%m-%d %H:%M:%S"), "inline": True},
+                ],
+                "footer": {"text": "Threads Monitor Bot 錯誤通知"},
+            }
+            
+            if failed_sources > 0:
+                embed["fields"].append({"name": "❌ 失敗數", "value": str(failed_sources), "inline": True})
+            
+            payload = {"embeds": [embed]}
+            response = self.session.post(self.webhook_url, json=payload, timeout=REQUEST_TIMEOUT)
+            response.raise_for_status()
+        except Exception as exc:
+            logger.error("Failed to send error alert: %s", exc)
 
     def _format_embed(self, post: Post) -> Dict[str, Any]:
+        # 時間已經在提取時轉換為台北時間格式
         published_text = post.published_at or "未知時間"
         
         # 截取文字摘要（Discord embed description 限制 4096 字元）
@@ -563,7 +619,7 @@ class BotRunner:
 
             except Exception as exc:
                 failed_count += 1
-                logger.exception("Source failed | source=%s", source.id)
+                logger.error("Source failed: %s - %s", source.id, str(exc)[:200])
                 self.state_store.mark_error(source.id, datetime.now(tz=UTC), str(exc))
 
         # 檢查是否需要發送健康檢查通知
@@ -578,19 +634,31 @@ class BotRunner:
                     
                     self.notifier.send_health_check(hours_since)
                     self.state_store.update_health_check(now)
-                    logger.info("Sent health check notification | hours_since_last=%.1f", hours_since)
+                    logger.info("Sent health check | hours_since=%.1f", hours_since)
             except Exception as exc:
-                logger.exception("Failed to send health check notification")
+                logger.error("Health check failed: %s", str(exc)[:100])
         
         self.state_store.save()
 
         finished_at = datetime.now(tz=UTC)
+        duration = int((finished_at - started_at).total_seconds())
+        
         logger.info(
             "Job finished | duration=%ss | notified=%s | failed=%s",
-            int((finished_at - started_at).total_seconds()),
-            notified_count,
-            failed_count,
+            duration, notified_count, failed_count
         )
+        
+        # 如果有多個來源失敗，發送錯誤通知
+        if failed_count >= len(enabled_sources) / 2 and failed_count > 0:
+            try:
+                self.notifier.send_error_alert(
+                    "批次執行失敗",
+                    f"有 {failed_count}/{len(enabled_sources)} 個來源抓取失敗\n執行時間: {duration}s",
+                    failed_sources=failed_count
+                )
+            except Exception:
+                pass  # 錯誤通知失敗不影響主程式
+        
         return 0 if failed_count == 0 else 1
 
 
@@ -598,8 +666,22 @@ def main() -> int:
     try:
         runner = BotRunner()
         return runner.run()
-    except Exception:
+    except KeyboardInterrupt:
+        logger.info("Interrupted by user")
+        return 130
+    except Exception as exc:
         logger.exception("Fatal error")
+        # 嘗試發送致命錯誤通知
+        try:
+            webhook_url = os.getenv("DISCORD_WEBHOOK_URL", "")
+            if webhook_url:
+                notifier = DiscordNotifier(webhook_url)
+                notifier.send_error_alert(
+                    "致命錯誤",
+                    f"程式執行失敗:\n{str(exc)[:500]}"
+                )
+        except Exception:
+            pass
         return 1
 
 
