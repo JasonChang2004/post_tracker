@@ -7,7 +7,7 @@
     "enabled": true,
     "check_interval_minutes": 60,
     "parser_type": "threads_public_profile",
-    "thread_id": 1481463792033464350
+    "thread_id": 1481470478865666088
   },
   {
     "id": "stock_glee",
@@ -17,7 +17,7 @@
     "enabled": true,
     "check_interval_minutes": 60,
     "parser_type": "threads_public_profile",
-    "thread_id": 1481463550496211067
+    "thread_id": 1481470555952779375
   },
   {
     "id": "aoyamaa._",
@@ -27,6 +27,26 @@
     "enabled": true,
     "check_interval_minutes": 60,
     "parser_type": "threads_public_profile",
-    "thread_id": 1481463869770567862
+    "thread_id": 1481470638244892745
+  },
+  {
+    "id": "growin_ai",
+    "platform": "threads",
+    "name": "growin_ai",
+    "url": "https://www.threads.com/@growin_ai",
+    "enabled": true,
+    "check_interval_minutes": 60,
+    "parser_type": "threads_public_profile",
+    "thread_id": 1481470701021167647
+  },
+  {
+    "id": "ai_j_2026.12",
+    "platform": "threads",
+    "name": "ai_j_2026.12",
+    "url": "https://www.threads.com/@ai_j_2026.12",
+    "enabled": true,
+    "check_interval_minutes": 60,
+    "parser_type": "threads_public_profile",
+    "thread_id": 1481470754771177632
   }
 ]
