@@ -150,12 +150,23 @@ class SourceLoader:
             except TypeError as exc:
                 raise BotError(f"Invalid source config: {item} ({exc})") from exc
 
-            if source.platform != "threads":
+            # 支持 threads 和 facebook 平台
+            if source.platform not in ["threads", "facebook"]:
                 logger.warning("Skip unsupported platform: %s", source.platform)
                 continue
 
-            if source.parser_type != "threads_public_profile":
-                logger.warning("Skip unsupported parser_type: %s", source.parser_type)
+            # 驗證 parser_type
+            valid_parsers = {
+                "threads": ["threads_public_profile"],
+                "facebook": ["facebook_public_page"],
+            }
+            
+            expected_parsers = valid_parsers.get(source.platform, [])
+            if source.parser_type not in expected_parsers:
+                logger.warning(
+                    "Skip unsupported parser_type: %s for platform: %s (expected: %s)",
+                    source.parser_type, source.platform, expected_parsers
+                )
                 continue
 
             sources.append(source)
@@ -469,6 +480,284 @@ class ThreadsFetcher:
         return text
 
 
+class FacebookFetcher:
+    def __init__(self):
+        self.session = requests.Session()
+        self.session.headers.update(DEFAULT_HEADERS)
+
+    def fetch_latest_posts(self, source: Source, limit: int = 5) -> List[Post]:
+        html = self._get_profile_html(source.url)
+        posts = self._extract_posts_from_html(html, source)
+        if not posts:
+            raise BotError(
+                f"Could not extract posts from Facebook page: {source.url}. "
+                "Facebook page structure may have changed."
+            )
+        return posts[:limit]
+
+    @retry_on_failure(max_attempts=2, delay=3, exceptions=(PlaywrightTimeoutError, BotError))
+    def _get_profile_html(self, url: str) -> str:
+        """使用 Playwright 抓取 Facebook 頁面（需要執行 JavaScript）"""
+        browser = None
+        try:
+            with sync_playwright() as p:
+                browser = p.chromium.launch(headless=True)
+                page = browser.new_page()
+                page.set_extra_http_headers(DEFAULT_HEADERS)
+                
+                # Facebook 頁面名稱
+                page_name = url.split('facebook.com/')[-1].rstrip('/')
+                logger.info("Fetching: %s", page_name)
+                
+                page.goto(url, wait_until="networkidle", timeout=30000)
+                # 等待頁面載入
+                page.wait_for_timeout(5000)
+                
+                # 嘗試滾動頁面以載入更多貼文
+                page.evaluate("window.scrollTo(0, document.body.scrollHeight / 2)")
+                page.wait_for_timeout(2000)
+                
+                html = page.content()
+                return html
+        except PlaywrightTimeoutError as exc:
+            raise BotError(f"Timeout: {url}") from exc
+        except Exception as exc:
+            raise BotError(f"Fetch failed: {exc}") from exc
+        finally:
+            if browser:
+                try:
+                    browser.close()
+                except Exception:
+                    pass
+
+    def _extract_posts_from_html(self, html: str, source: Source) -> List[Post]:
+        """從 Facebook HTML 中提取貼文"""
+        post_urls = self._extract_post_urls(html, source.url)
+        text_candidates = self._extract_text_candidates(html)
+        time_candidates = self._extract_time_candidates(html)
+        image_candidates = self._extract_image_candidates(html)
+
+        logger.info("Extracted | posts=%d texts=%d times=%d images=%d", 
+                   len(post_urls), len(text_candidates), len(time_candidates), len(image_candidates))
+
+        posts: List[Post] = []
+        for idx, post_url in enumerate(post_urls):
+            post_id = self._post_id_from_url(post_url)
+            if not post_id:
+                continue
+
+            text = text_candidates[idx] if idx < len(text_candidates) else ""
+            published_at = time_candidates[idx] if idx < len(time_candidates) else None
+            image_url = image_candidates[idx] if idx < len(image_candidates) else None
+
+            posts.append(
+                Post(
+                    post_id=post_id,
+                    url=post_url,
+                    text=self._clean_text(text) or "(no preview text)",
+                    published_at=published_at,
+                    source_name=source.name,
+                    image_url=image_url,
+                )
+            )
+
+        deduped: Dict[str, Post] = {}
+        for post in posts:
+            deduped[post.dedupe_key] = post
+
+        logger.info("=== Final Posts (after dedup) ===")
+        for i, post in enumerate(list(deduped.values())):
+            logger.info("Post %d:", i + 1)
+            logger.info("  ID: %s", post.post_id)
+            logger.info("  URL: %s", post.url)
+            logger.info("  Text: %s", post.text)
+            logger.info("  Published: %s", post.published_at)
+
+        return list(deduped.values())
+
+    def _extract_post_urls(self, html: str, page_url: str) -> List[str]:
+        """提取 Facebook 貼文 URL"""
+        urls: List[str] = []
+        page_id = page_url.split('facebook.com/')[-1].rstrip('/')
+        
+        # Facebook 貼文 URL 的多種格式
+        patterns = [
+            r'https://www\.facebook\.com/' + re.escape(page_id) + r'/posts/[^"\s<>?]+',
+            r'https://www\.facebook\.com/permalink\.php\?story_fbid=[^"\s<>&]+',
+            r'https://www\.facebook\.com/' + re.escape(page_id) + r'/videos/[^"\s<>?]+',
+            r'https://www\.facebook\.com/photo/?\?fbid=[^"\s<>&]+',
+            r'href="/' + re.escape(page_id) + r'/posts/(\d+)"',
+        ]
+
+        for pattern in patterns:
+            matches = re.findall(pattern, html)
+            for match in matches:
+                if 'href="' in pattern:
+                    # 相對路徑轉換為完整 URL
+                    full_url = f"https://www.facebook.com/{page_id}/posts/{match}"
+                else:
+                    full_url = match
+                
+                if full_url not in urls:
+                    urls.append(full_url)
+
+        return urls[:20]  # 限制最多 20 個貼文
+
+    def _extract_text_candidates(self, html: str) -> List[str]:
+        """提取貼文文字"""
+        texts: List[str] = []
+        
+        # 過濾掉的無效內容關鍵字
+        invalid_keywords = [
+            "width=device-width",
+            "fb://profile",
+            "app-id=",
+            "origin-when-crossorigin",
+            "https://www.facebook.com/",
+            "https://scontent",
+            "See posts, photos and more on Facebook",
+            "likes · ",
+            "talking about this",
+        ]
+        
+        # 從 meta description 中提取
+        soup = BeautifulSoup(html, "html.parser")
+        for tag in soup.find_all("meta"):
+            property_name = tag.get("property") or tag.get("name") or ""
+            # 只從特定的 meta 標籤提取
+            if property_name in ["og:description", "description", "twitter:description"]:
+                content = tag.get("content") or ""
+                if content and len(content) > 30:
+                    # 檢查是否包含無效關鍵字
+                    if not any(keyword in content for keyword in invalid_keywords):
+                        if content not in texts:
+                            texts.append(content.strip())
+        
+        # 從 JSON 數據中提取（Facebook 也會在頁面中嵌入 JSON 數據）
+        json_patterns = [
+            r'"markup"\s*:\s*\{"__html"\s*:\s*"([^"]{30,}?)"',
+            r'"message"\s*:\s*\{"text"\s*:\s*"([^"]{30,}?)"',
+            r'"story"\s*:\s*\{"text"\s*:\s*"([^"]{30,}?)"',
+        ]
+        
+        for pattern in json_patterns:
+            for match in re.findall(pattern, html):
+                try:
+                    # 直接處理 JSON 轉義字符，不使用 unicode_escape
+                    text = match.replace('\\n', '\n').replace('\\r', '\r')
+                    text = text.replace('\\t', '\t').replace('\\"', '"')
+                    text = text.replace('\\\\', '\\')
+                    # 處理 Unicode 轉義序列如 \\u6295
+                    import codecs
+                    text = codecs.decode(text, 'unicode_escape')
+                    # 移除 HTML 標籤
+                    text = re.sub(r'<[^>]+>', '', text)
+                    # 清理並重新編碼以移除無效字符
+                    text = text.encode('utf-8', errors='ignore').decode('utf-8', errors='ignore')
+                except Exception as e:
+                    logger.debug(f"Text extraction error: {e}")
+                    text = match
+                
+                text = self._clean_text(text)
+                # 檢查是否包含無效關鍵字
+                if text and len(text) > 30:
+                    if not any(keyword in text for keyword in invalid_keywords):
+                        if text not in texts:
+                            texts.append(text)
+
+        return texts
+
+    def _extract_time_candidates(self, html: str) -> List[str]:
+        """提取發布時間"""
+        candidates: List[str] = []
+
+        # Unix timestamp - Facebook 使用多種格式
+        timestamp_patterns = [
+            r'"created_time"\s*:\s*(\d{10,13})',
+            r'"publish_time"\s*:\s*(\d{10,13})',
+            r'"timestamp"\s*:\s*(\d{10,13})',
+            r'data-utime="(\d{10,13})"',
+        ]
+        
+        for pattern in timestamp_patterns:
+            for match in re.findall(pattern, html):
+                try:
+                    ts = int(match)
+                    if ts > 10**12:
+                        ts = ts / 1000
+                    dt = datetime.fromtimestamp(ts, tz=UTC)
+                    dt_taipei = dt.astimezone(TAIPEI_TZ)
+                    formatted = dt_taipei.strftime("%Y-%m-%d %H:%M:%S")
+                    if formatted not in candidates:
+                        candidates.append(formatted)
+                except Exception:
+                    continue
+
+        # ISO format
+        for match in re.findall(r'datetime="([^"]+)"', html):
+            try:
+                dt = datetime.fromisoformat(match.replace("Z", "+00:00"))
+                dt_taipei = dt.astimezone(TAIPEI_TZ)
+                formatted = dt_taipei.strftime("%Y-%m-%d %H:%M:%S")
+                if formatted not in candidates:
+                    candidates.append(formatted)
+            except Exception:
+                if match not in candidates:
+                    candidates.append(match)
+
+        return candidates
+
+    def _extract_image_candidates(self, html: str) -> List[Optional[str]]:
+        """提取貼文圖片 URL"""
+        images: List[Optional[str]] = []
+        
+        # Facebook 圖片 URL 模式
+        patterns = [
+            r'https://scontent[^"\s]+\.fbcdn\.net/[^"\s]+',
+            r'"url"\s*:\s*"(https://[^"]+\.fbcdn\.net/[^"]+)"',
+            r'data-ploi="([^"]+)"',
+        ]
+        
+        for pattern in patterns:
+            for match in re.findall(pattern, html):
+                # 移除 JSON 轉義（修復方式）
+                url = match.replace(r'\u002F', '/').replace('\\/', '/')
+                # 過濾掉太小的圖片（通常是頭像或 icon）
+                if all(x not in url for x in ['p130x130', 'p75x75', 'p50x50', '_profile_']):
+                    if url not in images:
+                        images.append(url)
+
+        return images[:10]  # 限制圖片數量
+
+    def _post_id_from_url(self, url: str) -> str:
+        """從 URL 提取貼文 ID"""
+        # 嘗試多種格式
+        patterns = [
+            r'/posts/(\d+)',
+            r'story_fbid=(\d+)',
+            r'fbid=(\d+)',
+            r'/videos/(\d+)',
+        ]
+        
+        for pattern in patterns:
+            match = re.search(pattern, url)
+            if match:
+                return match.group(1)
+        
+        # 如果都找不到，使用 URL hash 作為 ID
+        import hashlib
+        return hashlib.md5(url.encode()).hexdigest()[:12]
+
+    def _clean_text(self, text: str, limit: int = 180) -> str:
+        """清理文字"""
+        # 移除無效的 surrogate pairs
+        text = text.encode('utf-8', errors='ignore').decode('utf-8', errors='ignore')
+        text = re.sub(r"\s+", " ", text or "").strip()
+        if len(text) > limit:
+            return text[: limit - 3].rstrip() + "..."
+        return text
+
+
 class DiscordNotifier:
     def __init__(self, webhook_url: str):
         if not webhook_url:
@@ -479,6 +768,9 @@ class DiscordNotifier:
 
     @retry_on_failure(max_attempts=3, delay=2, exceptions=(requests.RequestException,))
     def send_post(self, post: Post, thread_id: Optional[str] = None) -> None:
+        # 確保文字已清理
+        post.text = post.text.encode('utf-8', errors='ignore').decode('utf-8', errors='ignore')
+        
         payload = {"embeds": [self._format_embed(post)]}
         
         # 如果指定了 thread_id，則發送到該 thread
@@ -491,6 +783,11 @@ class DiscordNotifier:
             json=payload,
             timeout=REQUEST_TIMEOUT,
         )
+        
+        # 記錄錯誤響應內容
+        if response.status_code != 200 and response.status_code != 204:
+            logger.error("Discord error response: %s", response.text)
+        
         response.raise_for_status()
     
     @retry_on_failure(max_attempts=2, delay=2, exceptions=(requests.RequestException,))
@@ -572,7 +869,8 @@ class BotRunner:
     def __init__(self):
         self.source_loader = SourceLoader(SOURCES_PATH)
         self.state_store = StateStore(STATE_PATH)
-        self.fetcher = ThreadsFetcher()
+        self.threads_fetcher = ThreadsFetcher()
+        self.facebook_fetcher = FacebookFetcher()
         self.notifier = DiscordNotifier(os.getenv("DISCORD_WEBHOOK_URL", ""))
 
     def run(self) -> int:
@@ -596,7 +894,14 @@ class BotRunner:
             self.state_store.mark_checked(source.id, now)
 
             try:
-                posts = self.fetcher.fetch_latest_posts(source)
+                # 根據平台選擇對應的 fetcher
+                if source.platform == "threads":
+                    posts = self.threads_fetcher.fetch_latest_posts(source)
+                elif source.platform == "facebook":
+                    posts = self.facebook_fetcher.fetch_latest_posts(source)
+                else:
+                    raise BotError(f"Unsupported platform: {source.platform}")
+                
                 new_posts = [
                     p for p in posts
                     if not self.state_store.is_notified(source.id, p.dedupe_key)

@@ -1,4 +1,106 @@
-# Threads Discord Monitor Bot
+# Social Media Monitor Bot v2.0
+
+## 功能特性
+
+- 🔔 自動追蹤社交媒體帳號最新貼文
+- 📬 即時通知到 Discord
+- 🔄 重試機制與錯誤處理
+- ⏰ 可自訂檢查間隔
+- 📊 健康檢查通知
+
+## 支援平台
+
+### **v2.0 新增功能**
+- ✅ **Facebook 公開頁面追蹤**
+- ✅ Threads 公開帳號追蹤
+
+## 安裝
+
+### 依賴套件
+
+```bash
+pip install -r requirements.txt
+python -m playwright install chromium
+```
+
+### 環境變數設定
+
+創建 `.env` 檔案並設定：
+
+```env
+DISCORD_WEBHOOK_URL=your_webhook_url_here
+```
+
+## 設定
+
+編輯 `config/sources.json` 來新增要追蹤的來源：
+
+### Threads 帳號範例
+
+```json
+{
+  "id": "make_investment_easy",
+  "platform": "threads",
+  "name": "make_investment_easy",
+  "url": "https://www.threads.com/@make_investment_easy",
+  "enabled": true,
+  "check_interval_minutes": 60,
+  "parser_type": "threads_public_profile",
+  "thread_id": 1481470478865666088
+}
+```
+
+### Facebook 頁面範例
+
+```json
+{
+  "id": "8tbow_facebook",
+  "platform": "facebook",
+  "name": "8TBOW",
+  "url": "https://www.facebook.com/8TBOW",
+  "enabled": true,
+  "check_interval_minutes": 60,
+  "parser_type": "facebook_public_page",
+  "thread_id": null
+}
+```
+
+## 使用方法
+
+```bash
+python app.py
+```
+
+## 目前追蹤的 Facebook 頁面
+
+1. [8TBOW](https://www.facebook.com/8TBOW)
+2. [Unclestocknotess](https://www.facebook.com/Unclestocknotess)
+
+## 資料夾結構
+
+```
+.
+├── app.py                  # 主程式
+├── requirements.txt        # Python 依賴
+├── config/
+│   └── sources.json       # 來源設定
+└── data/
+    └── state.json         # 狀態記錄
+```
+
+## 更新日誌
+
+### v2.0 (2026-03-12)
+- ✨ 新增 Facebook 平台支援
+- ✨ 實作 FacebookFetcher 類別
+- ✨ 修改 SourceLoader 支援多平台
+- ✨ 修改 BotRunner 根據平台選擇對應的 fetcher
+- 📦 新增 8TBOW 和 Unclestocknotess 兩個 Facebook 頁面追蹤
+
+### v1.0
+- ✅ Threads 平台追蹤功能
+- ✅ Discord 通知整合
+- ✅ 重試機制與錯誤處理
 
 自動監控 Threads 帳號的新貼文，並透過 Discord Webhook 發送通知。
 

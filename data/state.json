@@ -1,7 +1,7 @@
 {
   "make_investment_easy": {
-    "last_checked_at": "2026-03-12T03:23:40.266927Z",
-    "last_success_at": "2026-03-12T03:23:54.167268Z",
+    "last_checked_at": "2026-03-12T05:17:23.554220Z",
+    "last_success_at": "2026-03-12T05:17:34.488928Z",
     "last_error_at": null,
     "last_error_message": null,
     "notified_posts": [
@@ -13,8 +13,8 @@
     ]
   },
   "stock_glee": {
-    "last_checked_at": "2026-03-12T03:23:54.167280Z",
-    "last_success_at": "2026-03-12T03:24:06.319917Z",
+    "last_checked_at": "2026-03-12T05:17:34.488951Z",
+    "last_success_at": "2026-03-12T05:17:46.407777Z",
     "last_error_at": null,
     "last_error_message": null,
     "notified_posts": [
@@ -29,8 +29,8 @@
     ]
   },
   "aoyamaa._": {
-    "last_checked_at": "2026-03-12T03:24:06.319932Z",
-    "last_success_at": "2026-03-12T03:24:17.130390Z",
+    "last_checked_at": "2026-03-12T05:17:46.407790Z",
+    "last_success_at": "2026-03-12T05:17:56.628853Z",
     "last_error_at": null,
     "last_error_message": null,
     "notified_posts": [
@@ -46,8 +46,8 @@
     "last_health_check_at": null
   },
   "growin_ai": {
-    "last_checked_at": "2026-03-12T03:24:17.130408Z",
-    "last_success_at": "2026-03-12T03:24:28.298968Z",
+    "last_checked_at": "2026-03-12T05:17:56.628872Z",
+    "last_success_at": "2026-03-12T05:18:07.480699Z",
     "last_error_at": null,
     "last_error_message": null,
     "notified_posts": [
@@ -57,8 +57,8 @@
     ]
   },
   "ai_j_2026.12": {
-    "last_checked_at": "2026-03-12T03:24:28.298981Z",
-    "last_success_at": "2026-03-12T03:24:41.926408Z",
+    "last_checked_at": "2026-03-12T05:18:07.480714Z",
+    "last_success_at": "2026-03-12T05:18:18.370568Z",
     "last_error_at": null,
     "last_error_message": null,
     "notified_posts": [
@@ -67,5 +67,33 @@
       "DVwDkT6kd8d",
       "DVwEYgXEUZA"
     ]
+  },
+  "8TBOW": {
+    "last_checked_at": "2026-03-12T05:18:18.370582Z",
+    "last_success_at": null,
+    "last_error_at": "2026-03-12T05:18:37.612293Z",
+    "last_error_message": "400 Client Error: Bad Request for url: https://discord.com/api/webhooks/1481468320069718098/FjJnRYo1Veyyhoqo7TA112xHoMRsyHXShig54m22FsH98vXpSB6NsLUzTzCgYFYS_i6l?thread_id=1481501987794063434",
+    "notified_posts": []
+  },
+  "Unclestocknotess": {
+    "last_checked_at": "2026-03-12T05:18:37.612308Z",
+    "last_success_at": null,
+    "last_error_at": "2026-03-12T05:18:54.950828Z",
+    "last_error_message": "400 Client Error: Bad Request for url: https://discord.com/api/webhooks/1481468320069718098/FjJnRYo1Veyyhoqo7TA112xHoMRsyHXShig54m22FsH98vXpSB6NsLUzTzCgYFYS_i6l?thread_id=1481502058648698880",
+    "notified_posts": []
+  },
+  "8tbow_facebook": {
+    "last_checked_at": "2026-03-12T05:21:05.182858Z",
+    "last_success_at": null,
+    "last_error_at": "2026-03-12T05:21:24.228851Z",
+    "last_error_message": "400 Client Error: Bad Request for url: https://discord.com/api/webhooks/1481468320069718098/FjJnRYo1Veyyhoqo7TA112xHoMRsyHXShig54m22FsH98vXpSB6NsLUzTzCgYFYS_i6l?thread_id=1481501987794063434",
+    "notified_posts": []
+  },
+  "unclestocknotess_facebook": {
+    "last_checked_at": "2026-03-12T05:21:24.228870Z",
+    "last_success_at": null,
+    "last_error_at": "2026-03-12T05:21:44.130170Z",
+    "last_error_message": "400 Client Error: Bad Request for url: https://discord.com/api/webhooks/1481468320069718098/FjJnRYo1Veyyhoqo7TA112xHoMRsyHXShig54m22FsH98vXpSB6NsLUzTzCgYFYS_i6l?thread_id=1481502058648698880",
+    "notified_posts": []
   }
 }
