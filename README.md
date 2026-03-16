@@ -11,7 +11,6 @@
 ## 支援平台
 
 ### **v2.0 新增功能**
-- ✅ **Facebook 公開頁面追蹤**
 - ✅ Threads 公開帳號追蹤
 
 ## 安裝
@@ -50,31 +49,11 @@ DISCORD_WEBHOOK_URL=your_webhook_url_here
 }
 ```
 
-### Facebook 頁面範例
-
-```json
-{
-  "id": "8tbow_facebook",
-  "platform": "facebook",
-  "name": "8TBOW",
-  "url": "https://www.facebook.com/8TBOW",
-  "enabled": true,
-  "check_interval_minutes": 60,
-  "parser_type": "facebook_public_page",
-  "thread_id": null
-}
-```
-
 ## 使用方法
 
 ```bash
 python app.py
 ```
-
-## 目前追蹤的 Facebook 頁面
-
-1. [8TBOW](https://www.facebook.com/8TBOW)
-2. [Unclestocknotess](https://www.facebook.com/Unclestocknotess)
 
 ## 資料夾結構
 
@@ -91,11 +70,9 @@ python app.py
 ## 更新日誌
 
 ### v2.0 (2026-03-12)
-- ✨ 新增 Facebook 平台支援
-- ✨ 實作 FacebookFetcher 類別
-- ✨ 修改 SourceLoader 支援多平台
-- ✨ 修改 BotRunner 根據平台選擇對應的 fetcher
-- 📦 新增 8TBOW 和 Unclestocknotess 兩個 Facebook 頁面追蹤
+- ✨ 聚焦 Threads 平台追蹤
+- ✨ 優化 SourceLoader 平台驗證
+- ✨ 優化 BotRunner 抓取流程
 
 ### v1.0
 - ✅ Threads 平台追蹤功能
