@@ -126,23 +126,6 @@
       "82e3b9d57d80"
     ]
   },
-  "yutinghaosfinance": {
-    "last_checked_at": "2026-03-15T22:49:28.551505Z",
-    "last_success_at": "2026-03-15T22:49:38.289664Z",
-    "last_error_at": null,
-    "last_error_message": null,
-    "notified_posts": [
-      "6d1c4bff5c1a",
-      "0808ebbce915",
-      "9c4c09b3dab1",
-      "b9993772db3e",
-      "23881ef4eeda",
-      "29746cb7f150",
-      "960199590519281",
-      "e260717f9ac6",
-      "615d24f85dae"
-    ]
-  },
   "_health_check": {
     "last_notification_at": "2026-03-15T22:49:28.551395Z",
     "last_health_check_at": null
