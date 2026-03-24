@@ -1,7 +1,7 @@
 {
   "make_investment_easy": {
-    "last_checked_at": "2026-03-24T10:10:18.747415Z",
-    "last_success_at": "2026-03-24T10:10:26.381952Z",
+    "last_checked_at": "2026-03-24T11:10:50.117390Z",
+    "last_success_at": "2026-03-24T11:10:56.953024Z",
     "last_error_at": null,
     "last_error_message": null,
     "notified_posts": [
@@ -22,8 +22,8 @@
     ]
   },
   "stock_glee": {
-    "last_checked_at": "2026-03-24T10:10:26.381959Z",
-    "last_success_at": "2026-03-24T10:10:32.776326Z",
+    "last_checked_at": "2026-03-24T11:10:56.953041Z",
+    "last_success_at": "2026-03-24T11:11:03.752565Z",
     "last_error_at": null,
     "last_error_message": null,
     "notified_posts": [
@@ -80,8 +80,8 @@
     ]
   },
   "aoyamaa._": {
-    "last_checked_at": "2026-03-24T10:10:32.776340Z",
-    "last_success_at": "2026-03-24T10:10:39.981609Z",
+    "last_checked_at": "2026-03-24T11:11:03.752581Z",
+    "last_success_at": "2026-03-24T11:11:10.736651Z",
     "last_error_at": null,
     "last_error_message": null,
     "notified_posts": [
@@ -120,8 +120,8 @@
     ]
   },
   "growin_ai": {
-    "last_checked_at": "2026-03-24T10:10:39.981620Z",
-    "last_success_at": "2026-03-24T10:10:46.339171Z",
+    "last_checked_at": "2026-03-24T11:11:10.736667Z",
+    "last_success_at": "2026-03-24T11:11:17.031744Z",
     "last_error_at": null,
     "last_error_message": null,
     "notified_posts": [
@@ -149,8 +149,8 @@
     ]
   },
   "ai_j_2026.12": {
-    "last_checked_at": "2026-03-24T10:10:46.339187Z",
-    "last_success_at": "2026-03-24T10:10:52.804469Z",
+    "last_checked_at": "2026-03-24T11:11:17.031763Z",
+    "last_success_at": "2026-03-24T11:11:23.596616Z",
     "last_error_at": null,
     "last_error_message": null,
     "notified_posts": [
@@ -200,8 +200,8 @@
     "last_health_check_at": null
   },
   "unclestocknotes": {
-    "last_checked_at": "2026-03-24T10:10:52.804491Z",
-    "last_success_at": "2026-03-24T10:10:59.934582Z",
+    "last_checked_at": "2026-03-24T11:11:23.596634Z",
+    "last_success_at": "2026-03-24T11:11:29.668931Z",
     "last_error_at": null,
     "last_error_message": null,
     "notified_posts": [
