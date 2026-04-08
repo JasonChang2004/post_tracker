@@ -1,7 +1,7 @@
 {
   "make_investment_easy": {
-    "last_checked_at": "2026-04-08T14:03:01.929173Z",
-    "last_success_at": "2026-04-08T14:03:09.248560Z",
+    "last_checked_at": "2026-04-08T15:45:53.894383Z",
+    "last_success_at": "2026-04-08T15:46:02.619622Z",
     "last_error_at": null,
     "last_error_message": null,
     "notified_posts": [
@@ -40,8 +40,8 @@
     ]
   },
   "stock_glee": {
-    "last_checked_at": "2026-04-08T14:03:09.248573Z",
-    "last_success_at": "2026-04-08T14:03:16.886860Z",
+    "last_checked_at": "2026-04-08T15:46:02.619636Z",
+    "last_success_at": "2026-04-08T15:46:09.116409Z",
     "last_error_at": null,
     "last_error_message": null,
     "notified_posts": [
@@ -98,11 +98,12 @@
     ]
   },
   "aoyamaa._": {
-    "last_checked_at": "2026-04-08T14:03:16.886868Z",
-    "last_success_at": "2026-04-08T14:03:24.573894Z",
+    "last_checked_at": "2026-04-08T15:46:09.116425Z",
+    "last_success_at": "2026-04-08T15:46:15.635655Z",
     "last_error_at": null,
     "last_error_message": null,
     "notified_posts": [
+      "DV2yVMmkaWV",
       "DW3ttvVEWxC",
       "DW22id3EZlI",
       "DW1ZU4Oka25",
@@ -151,13 +152,12 @@
       "DV-OXTlEQTV",
       "DV-OXV8EZgn",
       "DV7pWT7kVsf",
-      "DV7pad8EfAB",
-      "DV467c0EQdJ"
+      "DV7pad8EfAB"
     ]
   },
   "growin_ai": {
-    "last_checked_at": "2026-04-08T14:03:24.573903Z",
-    "last_success_at": "2026-04-08T14:03:31.655671Z",
+    "last_checked_at": "2026-04-08T15:46:15.635666Z",
+    "last_success_at": "2026-04-08T15:46:22.048849Z",
     "last_error_at": null,
     "last_error_message": null,
     "notified_posts": [
@@ -194,8 +194,8 @@
     ]
   },
   "ai_j_2026.12": {
-    "last_checked_at": "2026-04-08T14:03:31.655683Z",
-    "last_success_at": "2026-04-08T14:03:39.436655Z",
+    "last_checked_at": "2026-04-08T15:46:22.048868Z",
+    "last_success_at": "2026-04-08T15:46:28.723118Z",
     "last_error_at": null,
     "last_error_message": null,
     "notified_posts": [
@@ -253,15 +253,16 @@
     ]
   },
   "_health_check": {
-    "last_notification_at": "2026-04-08T14:03:24.573781Z",
+    "last_notification_at": "2026-04-08T15:46:34.970701Z",
     "last_health_check_at": null
   },
   "unclestocknotes": {
-    "last_checked_at": "2026-04-08T14:03:39.436676Z",
-    "last_success_at": "2026-04-08T14:03:46.173434Z",
+    "last_checked_at": "2026-04-08T15:46:28.723138Z",
+    "last_success_at": "2026-04-08T15:46:34.970794Z",
     "last_error_at": null,
     "last_error_message": null,
     "notified_posts": [
+      "DW3-qZZD6sO",
       "DW3SZ1oD3CD",
       "DW1lujuDyHE",
       "DW1Mzavj_R2",
@@ -310,8 +311,7 @@
       "DWmMCzHD3Xc",
       "DWmEbvrj4da",
       "DWl7sx5D6hO",
-      "DWlyaZGj8mQ",
-      "DWlrzGij5v8"
+      "DWlyaZGj8mQ"
     ]
   }
 }
