@@ -1,7 +1,7 @@
 {
   "make_investment_easy": {
-    "last_checked_at": "2026-04-16T11:20:44.487976Z",
-    "last_success_at": "2026-04-16T11:20:53.002494Z",
+    "last_checked_at": "2026-04-16T14:14:52.819834Z",
+    "last_success_at": "2026-04-16T14:14:59.529486Z",
     "last_error_at": null,
     "last_error_message": null,
     "notified_posts": [
@@ -47,11 +47,12 @@
     ]
   },
   "stock_glee": {
-    "last_checked_at": "2026-04-16T11:20:53.002505Z",
-    "last_success_at": "2026-04-16T11:21:00.122774Z",
+    "last_checked_at": "2026-04-16T14:14:59.529497Z",
+    "last_success_at": "2026-04-16T14:15:06.193488Z",
     "last_error_at": null,
     "last_error_message": null,
     "notified_posts": [
+      "DXMVauqkpxe",
       "DXML2nSkuGO",
       "DXMJjzakvPv",
       "DXMJclmEkY0",
@@ -100,13 +101,12 @@
       "DW3vaulkhHS",
       "DW3MJS3kvK1",
       "DW3M8y0kjVD",
-      "DW2lBVUEj40",
-      "DW2St_fEgB2"
+      "DW2lBVUEj40"
     ]
   },
   "aoyamaa._": {
-    "last_checked_at": "2026-04-16T11:21:00.122782Z",
-    "last_success_at": "2026-04-16T11:21:06.565658Z",
+    "last_checked_at": "2026-04-16T14:15:06.193495Z",
+    "last_success_at": "2026-04-16T14:15:12.528508Z",
     "last_error_at": null,
     "last_error_message": null,
     "notified_posts": [
@@ -163,8 +163,8 @@
     ]
   },
   "growin_ai": {
-    "last_checked_at": "2026-04-16T11:21:06.565671Z",
-    "last_success_at": "2026-04-16T11:21:13.647013Z",
+    "last_checked_at": "2026-04-16T14:15:12.528524Z",
+    "last_success_at": "2026-04-16T14:15:19.019336Z",
     "last_error_at": null,
     "last_error_message": null,
     "notified_posts": [
@@ -204,8 +204,8 @@
     ]
   },
   "ai_j_2026.12": {
-    "last_checked_at": "2026-04-16T11:21:13.647032Z",
-    "last_success_at": "2026-04-16T11:21:20.407077Z",
+    "last_checked_at": "2026-04-16T14:15:19.019356Z",
+    "last_success_at": "2026-04-16T14:15:25.789619Z",
     "last_error_at": null,
     "last_error_message": null,
     "notified_posts": [
@@ -268,12 +268,12 @@
     ]
   },
   "_health_check": {
-    "last_notification_at": "2026-04-16T11:21:00.122702Z",
+    "last_notification_at": "2026-04-16T14:15:06.193391Z",
     "last_health_check_at": null
   },
   "unclestocknotes": {
-    "last_checked_at": "2026-04-16T11:21:20.407093Z",
-    "last_success_at": "2026-04-16T11:21:26.640250Z",
+    "last_checked_at": "2026-04-16T14:15:25.789635Z",
+    "last_success_at": "2026-04-16T14:15:32.061437Z",
     "last_error_at": null,
     "last_error_message": null,
     "notified_posts": [
