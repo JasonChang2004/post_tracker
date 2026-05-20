@@ -1,7 +1,7 @@
 {
   "make_investment_easy": {
-    "last_checked_at": "2026-05-20T08:37:11.914690Z",
-    "last_success_at": "2026-05-20T08:37:19.377599Z",
+    "last_checked_at": "2026-05-20T12:03:56.169155Z",
+    "last_success_at": "2026-05-20T12:04:04.347936Z",
     "last_error_at": null,
     "last_error_message": null,
     "notified_posts": [
@@ -58,8 +58,8 @@
     ]
   },
   "stock_glee": {
-    "last_checked_at": "2026-05-20T08:37:19.377605Z",
-    "last_success_at": "2026-05-20T08:37:25.461944Z",
+    "last_checked_at": "2026-05-20T12:04:04.347952Z",
+    "last_success_at": "2026-05-20T12:04:11.949519Z",
     "last_error_at": null,
     "last_error_message": null,
     "notified_posts": [
@@ -116,11 +116,13 @@
     ]
   },
   "aoyamaa._": {
-    "last_checked_at": "2026-05-20T08:37:25.461953Z",
-    "last_success_at": "2026-05-20T08:37:32.079000Z",
+    "last_checked_at": "2026-05-20T12:04:11.949535Z",
+    "last_success_at": "2026-05-20T12:04:18.825965Z",
     "last_error_at": null,
     "last_error_message": null,
     "notified_posts": [
+      "DYjjreUEfcr",
+      "DYjk4GQkWhl",
       "DYhax-SEZng",
       "DYgicEaEeSB",
       "DYgUv6gEdy6",
@@ -168,14 +170,12 @@
       "DXy1t73kRkB",
       "DV2yVMmkaWV",
       "DXyhhk3kYhk",
-      "DXyJ-7jEcVd",
-      "DXww-_aEXzP",
-      "DXwL50AETWH"
+      "DXyJ-7jEcVd"
     ]
   },
   "growin_ai": {
-    "last_checked_at": "2026-05-20T08:37:32.079018Z",
-    "last_success_at": "2026-05-20T08:37:38.413761Z",
+    "last_checked_at": "2026-05-20T12:04:18.825973Z",
+    "last_success_at": "2026-05-20T12:04:25.055749Z",
     "last_error_at": null,
     "last_error_message": null,
     "notified_posts": [
@@ -232,8 +232,8 @@
     ]
   },
   "ai_j_2026.12": {
-    "last_checked_at": "2026-05-20T08:37:38.413778Z",
-    "last_success_at": "2026-05-20T08:37:45.283099Z",
+    "last_checked_at": "2026-05-20T12:04:25.055767Z",
+    "last_success_at": "2026-05-20T12:04:31.795355Z",
     "last_error_at": null,
     "last_error_message": null,
     "notified_posts": [
@@ -319,12 +319,12 @@
     ]
   },
   "_health_check": {
-    "last_notification_at": "2026-05-20T08:37:25.461827Z",
+    "last_notification_at": "2026-05-20T12:04:18.825860Z",
     "last_health_check_at": null
   },
   "unclestocknotes": {
-    "last_checked_at": "2026-05-20T08:37:45.283123Z",
-    "last_success_at": "2026-05-20T08:37:51.616918Z",
+    "last_checked_at": "2026-05-20T12:04:31.795373Z",
+    "last_success_at": "2026-05-20T12:04:37.842910Z",
     "last_error_at": null,
     "last_error_message": null,
     "notified_posts": [
