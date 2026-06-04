@@ -1,7 +1,7 @@
 {
   "make_investment_easy": {
-    "last_checked_at": "2026-06-04T05:05:21.049129Z",
-    "last_success_at": "2026-06-04T05:05:28.417456Z",
+    "last_checked_at": "2026-06-04T09:00:52.166020Z",
+    "last_success_at": "2026-06-04T09:00:59.685222Z",
     "last_error_at": null,
     "last_error_message": null,
     "notified_posts": [
@@ -58,8 +58,8 @@
     ]
   },
   "stock_glee": {
-    "last_checked_at": "2026-06-04T05:05:28.417467Z",
-    "last_success_at": "2026-06-04T05:05:35.408209Z",
+    "last_checked_at": "2026-06-04T09:00:59.685235Z",
+    "last_success_at": "2026-06-04T09:01:06.220038Z",
     "last_error_at": null,
     "last_error_message": null,
     "notified_posts": [
@@ -116,8 +116,8 @@
     ]
   },
   "aoyamaa._": {
-    "last_checked_at": "2026-06-04T05:05:35.408224Z",
-    "last_success_at": "2026-06-04T05:05:42.610193Z",
+    "last_checked_at": "2026-06-04T09:01:06.220051Z",
+    "last_success_at": "2026-06-04T09:01:12.659104Z",
     "last_error_at": null,
     "last_error_message": null,
     "notified_posts": [
@@ -174,8 +174,8 @@
     ]
   },
   "growin_ai": {
-    "last_checked_at": "2026-06-04T05:05:42.610205Z",
-    "last_success_at": "2026-06-04T05:05:49.782188Z",
+    "last_checked_at": "2026-06-04T09:01:12.659123Z",
+    "last_success_at": "2026-06-04T09:01:19.511071Z",
     "last_error_at": null,
     "last_error_message": null,
     "notified_posts": [
@@ -232,8 +232,8 @@
     ]
   },
   "ai_j_2026.12": {
-    "last_checked_at": "2026-06-04T05:05:49.782202Z",
-    "last_success_at": "2026-06-04T05:05:57.495207Z",
+    "last_checked_at": "2026-06-04T09:01:19.511087Z",
+    "last_success_at": "2026-06-04T09:01:26.948177Z",
     "last_error_at": null,
     "last_error_message": null,
     "notified_posts": [
@@ -319,15 +319,16 @@
     ]
   },
   "_health_check": {
-    "last_notification_at": "2026-06-04T05:06:04.623196Z",
+    "last_notification_at": "2026-06-04T09:01:33.524021Z",
     "last_health_check_at": null
   },
   "unclestocknotes": {
-    "last_checked_at": "2026-06-04T05:05:57.495225Z",
-    "last_success_at": "2026-06-04T05:06:04.623358Z",
+    "last_checked_at": "2026-06-04T09:01:26.948192Z",
+    "last_success_at": "2026-06-04T09:01:33.524122Z",
     "last_error_at": null,
     "last_error_message": null,
     "notified_posts": [
+      "DZJ0pv_jlsH",
       "DZJlnV9DoVo",
       "DZJXZg6CYNC",
       "DZI2nFCD1QI",
@@ -376,8 +377,7 @@
       "DY49OOoDod-",
       "DY45rVTDgjr",
       "DNADFn2M26G",
-      "DY3-H_wjiMG",
-      "DY39RM5jqA5"
+      "DY3-H_wjiMG"
     ]
   }
 }
