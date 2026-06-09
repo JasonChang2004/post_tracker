@@ -1,7 +1,7 @@
 {
   "make_investment_easy": {
-    "last_checked_at": "2026-06-09T15:29:19.277796Z",
-    "last_success_at": "2026-06-09T15:29:28.825994Z",
+    "last_checked_at": "2026-06-09T18:21:16.212659Z",
+    "last_success_at": "2026-06-09T18:21:25.091032Z",
     "last_error_at": null,
     "last_error_message": null,
     "notified_posts": [
@@ -58,8 +58,8 @@
     ]
   },
   "stock_glee": {
-    "last_checked_at": "2026-06-09T15:29:28.826010Z",
-    "last_success_at": "2026-06-09T15:29:35.230717Z",
+    "last_checked_at": "2026-06-09T18:21:25.091047Z",
+    "last_success_at": "2026-06-09T18:21:31.795472Z",
     "last_error_at": null,
     "last_error_message": null,
     "notified_posts": [
@@ -116,8 +116,8 @@
     ]
   },
   "aoyamaa._": {
-    "last_checked_at": "2026-06-09T15:29:35.230725Z",
-    "last_success_at": "2026-06-09T15:29:41.576255Z",
+    "last_checked_at": "2026-06-09T18:21:31.795491Z",
+    "last_success_at": "2026-06-09T18:21:38.803645Z",
     "last_error_at": null,
     "last_error_message": null,
     "notified_posts": [
@@ -174,8 +174,8 @@
     ]
   },
   "growin_ai": {
-    "last_checked_at": "2026-06-09T15:29:41.576270Z",
-    "last_success_at": "2026-06-09T15:29:48.036085Z",
+    "last_checked_at": "2026-06-09T18:21:38.803662Z",
+    "last_success_at": "2026-06-09T18:21:45.522542Z",
     "last_error_at": null,
     "last_error_message": null,
     "notified_posts": [
@@ -232,11 +232,12 @@
     ]
   },
   "ai_j_2026.12": {
-    "last_checked_at": "2026-06-09T15:29:48.036105Z",
-    "last_success_at": "2026-06-09T15:29:54.815644Z",
+    "last_checked_at": "2026-06-09T18:21:45.522560Z",
+    "last_success_at": "2026-06-09T18:21:53.474686Z",
     "last_error_at": null,
     "last_error_message": null,
     "notified_posts": [
+      "DZXv7tXn1lE",
       "DY99SdXn0bv",
       "DY99SXNn8vQ",
       "DZRsm2zkVUb",
@@ -285,8 +286,7 @@
       "DXrQhfmEXTN",
       "DXrQhcMkQ7U",
       "DXmAEazEdrK",
-      "DXmAETGETOt",
-      "DXj6Jx-kYUL"
+      "DXmAETGETOt"
     ]
   },
   "Unclestocknotess": {
@@ -319,15 +319,17 @@
     ]
   },
   "_health_check": {
-    "last_notification_at": "2026-06-09T15:29:35.230584Z",
+    "last_notification_at": "2026-06-09T18:22:00.200196Z",
     "last_health_check_at": null
   },
   "unclestocknotes": {
-    "last_checked_at": "2026-06-09T15:29:54.815691Z",
-    "last_success_at": "2026-06-09T15:30:00.877322Z",
+    "last_checked_at": "2026-06-09T18:21:53.474695Z",
+    "last_success_at": "2026-06-09T18:22:00.200317Z",
     "last_error_at": null,
     "last_error_message": null,
     "notified_posts": [
+      "DZX_pEcFGT0",
+      "DZX8UUFFFIQ",
       "DZW3P9_jm30",
       "DZWHl_xjNVk",
       "DZWE0-HDIqj",
@@ -375,9 +377,7 @@
       "DZGfRxbj73a",
       "DZGWdRCEpsl",
       "DZGVp9dj-6q",
-      "DZFuILLDtOv",
-      "DZESdzPjCTC",
-      "DZEQPdqDGGK"
+      "DZFuILLDtOv"
     ]
   }
 }
