@@ -1,10 +1,11 @@
 {
   "make_investment_easy": {
-    "last_checked_at": "2026-06-11T11:48:34.955166Z",
-    "last_success_at": "2026-06-11T11:48:41.523944Z",
+    "last_checked_at": "2026-06-11T16:20:53.546792Z",
+    "last_success_at": "2026-06-11T16:21:00.780707Z",
     "last_error_at": null,
     "last_error_message": null,
     "notified_posts": [
+      "DZcu0ylgbNR",
       "DZbwG1cgdVu",
       "DZU88VjAeFq",
       "DZGbySaEk0S",
@@ -53,16 +54,17 @@
       "DW7qHQAAQCJ",
       "DWy1HsrAfFo",
       "DWw6VAckz9U",
-      "DWwONOfgRDN",
-      "DWvYdB0Aa8j"
+      "DWwONOfgRDN"
     ]
   },
   "stock_glee": {
-    "last_checked_at": "2026-06-11T11:48:41.523957Z",
-    "last_success_at": "2026-06-11T11:48:47.805770Z",
+    "last_checked_at": "2026-06-11T16:21:00.780711Z",
+    "last_success_at": "2026-06-11T16:21:06.917649Z",
     "last_error_at": null,
     "last_error_message": null,
     "notified_posts": [
+      "DZciTX4kgSq",
+      "DZchnvdktW2",
       "DZcaiQyEsA6",
       "DZbNwHNkhtg",
       "DZbS8RuEoNC",
@@ -110,17 +112,16 @@
       "DZH7RXJkvZe",
       "DZHLz7TEgPP",
       "DZGkCa0knzW",
-      "DZGi4v-kuxp",
-      "DZFeBvtERbw",
-      "DZFZZhAkZK4"
+      "DZGi4v-kuxp"
     ]
   },
   "aoyamaa._": {
-    "last_checked_at": "2026-06-11T11:48:47.805778Z",
-    "last_success_at": "2026-06-11T11:48:54.219893Z",
+    "last_checked_at": "2026-06-11T16:21:06.917653Z",
+    "last_success_at": "2026-06-11T16:21:13.776609Z",
     "last_error_at": null,
     "last_error_message": null,
     "notified_posts": [
+      "DV2yVMmkaWV",
       "DZcLHNykbj_",
       "DZcLhFhkd-m",
       "DZaN4puCcat",
@@ -169,13 +170,12 @@
       "DYrhfoakQmh",
       "DYq4dW3Ed_Z",
       "DYq4jsPkdqf",
-      "DYowRmZEeLO",
-      "DYo9GwtiRmw"
+      "DYowRmZEeLO"
     ]
   },
   "growin_ai": {
-    "last_checked_at": "2026-06-11T11:48:54.219900Z",
-    "last_success_at": "2026-06-11T11:49:01.391113Z",
+    "last_checked_at": "2026-06-11T16:21:13.776616Z",
+    "last_success_at": "2026-06-11T16:21:19.701195Z",
     "last_error_at": null,
     "last_error_message": null,
     "notified_posts": [
@@ -232,8 +232,8 @@
     ]
   },
   "ai_j_2026.12": {
-    "last_checked_at": "2026-06-11T11:49:01.391132Z",
-    "last_success_at": "2026-06-11T11:49:07.941334Z",
+    "last_checked_at": "2026-06-11T16:21:19.701207Z",
+    "last_success_at": "2026-06-11T16:21:26.086445Z",
     "last_error_at": null,
     "last_error_message": null,
     "notified_posts": [
@@ -319,12 +319,12 @@
     ]
   },
   "_health_check": {
-    "last_notification_at": "2026-06-11T11:49:14.168586Z",
+    "last_notification_at": "2026-06-11T16:21:13.776545Z",
     "last_health_check_at": null
   },
   "unclestocknotes": {
-    "last_checked_at": "2026-06-11T11:49:07.941351Z",
-    "last_success_at": "2026-06-11T11:49:14.168696Z",
+    "last_checked_at": "2026-06-11T16:21:26.086459Z",
+    "last_success_at": "2026-06-11T16:21:31.995215Z",
     "last_error_at": null,
     "last_error_message": null,
     "notified_posts": [
